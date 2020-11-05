@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Hilarious Joke happened!</title>
+    <style>
+        .center {
+            margin: auto;
+            width: 50%;
+            text-align: center;
+            padding: 20em;
+        }
+        #play {
+            padding: 1em;
+            background: #4CAF50;
+            font-size: larger;
+        }
+    </style>
+</head>
+<body>
+    <audio data-key="74" src="/sounds/snare.wav"></audio>
+    <audio data-key="69" src="/sounds/crash.wav"></audio>
+    <div class="center">
+        <button id="play">A Hilarious Joke Happened!</button>
+    </div>
+    <script>
+        const play = document.querySelector('#play');
+        play.addEventListener('click', () => playAudioSync([74, 74, 69], 0));
+
+        function playAudioSync(array, index) {
+            if (!array[index]) {
+                return;
+            }
+            const audio = document.querySelector(`audio[data-key="${array[index]}"]`);
+            audio.currentTime = 0;
+            audio.onended = () => playAudioSync(array, index + 1);
+            audio.play();
+        }
+
+        // audioPromise(74).then(() => audioPromise(74).then(() => audioPromise(69)))
+        function audioPromise(keyCode) {
+            return new Promise((resolve) => {
+                const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
+                audio.currentTime = 0;
+                audio.onended = resolve;
+                audio.play();
+            });
+        }
+    </script>
+</body>
+</html>
