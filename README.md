@@ -9,7 +9,7 @@ docker build -t joke-sound .
 ```
 
 ```bash
-docker run -it -d -p 8080:80 joke-sound
+docker run -it -d --restart unless-stopped -p 8080:80 joke-sound
 ```
 
 http://localhost:8080/index.html
